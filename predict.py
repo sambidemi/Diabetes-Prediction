@@ -48,7 +48,7 @@ df['heart_disease'] = df['heart_disease'].map(lambda x: 1 if 'Yes' else 0)
 
 import joblib
 if 'model' not in st.session_state:
-    st.session_state.model = joblib.load('Diabetes_prediction_model.pk1')
+    st.session_state.model = joblib.load('Diabetes_prediction_model.pkl')
 
 btn = st.sidebar.button('Predict')
 left_col , right_col = st.columns(2)
