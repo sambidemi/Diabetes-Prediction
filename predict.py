@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 st.sidebar.header('Predict Your Diabetes Status 🩺')
 
 def userinput():
