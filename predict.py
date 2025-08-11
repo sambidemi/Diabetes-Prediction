@@ -6,7 +6,8 @@ st.sidebar.header('Predict Your Diabetes Status 🩺')
 def userinput():
     global name
     name = str(st.sidebar.text_input('Enter Your Name: ')).strip()
-    
+    if name == '':
+        st.sidebar.warning('Please Enter your name')
     gender = str(st.sidebar.radio('👨👩‍🦰 Gender: ', ['Male', 'Female']))
 
     age = int(st.sidebar.number_input('👴🏿 Age: ', 3, 90))
@@ -38,6 +39,7 @@ st.markdown('----------------------------------')
 st.markdown('### __User Features__')
 st.write(df)
 
+#### perform encoding 
 df['gender'] = df['gender'].map(lambda x: 1 if 'Male' else 0)
 
 smoking_history_dict = {'No Info': 0,'never':1, 'not current':2, 'former':3, 'current':4, 'ever': 6 }
@@ -49,7 +51,7 @@ df['heart_disease'] = df['heart_disease'].map(lambda x: 1 if 'Yes' else 0)
 
 import joblib
 if 'model' not in st.session_state:
-    st.session_state.model = joblib.load('Diabetes_prediction_model.pk1')
+    st.session_state.model = joblib.load('Diabetes_prediction_model.pkl')
 
 btn = st.sidebar.button('Predict')
 left_col , right_col = st.columns(2)
@@ -59,9 +61,6 @@ if btn:
     
     prob_0 = round((prediction_prob[0,0]) * 100, 2)
     prob_1 = round((prediction_prob[0,1]) * 100,2)
-    if name == None:
-        exp = ValueError('please kindly enter your name')
-        st.sidebar.exception(exp)
 
     left_col.header('Diabetes Prediction')
     if prediction[0] == 1:
@@ -75,4 +74,3 @@ if btn:
 
     right_col.image('img2.jpg')
 st.markdown('--------------------------------')
-
